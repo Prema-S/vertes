@@ -1,15 +1,19 @@
 import pandas as pd
 from typing import List
 import os
+from fastapi.middleware.wsgi import WSGIMiddleware
+
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 app = FastAPI()
 
+wsgi_app = WSGIMiddleware(app)
+
 # Enable CORS
 import re
-from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -44,4 +48,3 @@ def get_students(class_: List[str] = Query(default=[], alias="class_")):
 
     return JSONResponse({"students": students_data})
     
-wsgi_app = ASGIMiddleware(app)
