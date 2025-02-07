@@ -24,7 +24,7 @@ if os.path.exists(json_file_path):
 else:
     df = pd.DataFrame()  # Empty DataFrame if file is missing
 
-@app.get("/api")
+@app.get("/")
 def get_students(class_: List[str] = Query(default=[], alias="class_")):
     """
     API to fetch student data based on class filter.
