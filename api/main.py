@@ -4,16 +4,19 @@ import os
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
+import uvicorn
 app = FastAPI()
 
 # Enable CORS
+import re
+from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Allows all origins
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
 )
 
 # Load the JSON file (Fixing path issue)
@@ -40,3 +43,5 @@ def get_students(class_: List[str] = Query(default=[], alias="class_")):
     students_data = filtered_df.to_dict(orient='records')
 
     return JSONResponse({"students": students_data})
+    
+wsgi_app = ASGIMiddleware(app)
